@@ -25,7 +25,9 @@ app.all('/',(req,res)=>{
     })
 })
 
-app.use('/api/mail',require('./src/routes/mail'))
+//! /api ifadesinden sonra /routes/mail içerisindeki işlemi çalıştırır
+app.use('/api',require('./src/routes/mail'))
+
 
 
 //* ERROR HANDLER

@@ -2,14 +2,28 @@
 
 
 
-module.exports={
+module.exports = {
 
 
-    mail:async (req,res)=>{
+    sendMail: async (req, res) => {
 
-        res.send({
-            result:"welcome canim :D"
-        })
+
+        const { to } = req.body
+
+        if (to) {
+
+            res.send({
+                error: false,
+                result: "to is correct",
+                to:to
+            })
+
+        } else {
+            res.errorStatusCode = 401
+            throw new Error('This account is not active.')
+        }
+
+
     }
 
 
