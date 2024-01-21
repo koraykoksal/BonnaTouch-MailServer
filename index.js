@@ -26,8 +26,10 @@ app.use(cors({
 app.all('/', (req, res) => {
 
     res.status(200).send({
-        error: false,
-        result: "Welcome to Bonna Touch Mail Server"
+        response: {
+            error: false,
+            result: "Welcome to Bonna Touch Mail Server"
+        }
     })
 })
 
@@ -41,7 +43,7 @@ app.use(require('./src/middlewares/errorHandler'))
 
 
 const PORT = process.env.PORT || 8000
-app.listen(PORT, () => console.log('server running via port',PORT))
+app.listen(PORT, () => console.log('server running via port', PORT))
 
 
 
