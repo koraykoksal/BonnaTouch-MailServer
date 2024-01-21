@@ -21,7 +21,7 @@ module.exports = {
 
                 // Başarılı yanıt gönder
                 res.status(200).send({
-                    data: {
+                    response: {
                         error: false,
                         status: 200,
                         message: "Email successfully sent."

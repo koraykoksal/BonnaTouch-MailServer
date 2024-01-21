@@ -25,7 +25,7 @@ app.use(cors({
 //! Route
 app.all('/', (req, res) => {
 
-    res.send({
+    res.status(200).send({
         error: false,
         result: "Welcome to Bonna Touch Mail Server"
     })
