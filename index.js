@@ -17,9 +17,9 @@ app.use(express.json())
 
 //! backend deploy edildiğinde deploy edilen adrese istek atıldığı zaman CORS hatası alınabilir.
 //! bunun önüne geçmek için original adresi belirtiyoruz
-app.use(cors({
-    origin: 'http://127.0.0.1:8000'
-}));
+// app.use(cors({
+//     origin: 'http://127.0.0.1:8000'
+// }));
 
 
 //! Route
