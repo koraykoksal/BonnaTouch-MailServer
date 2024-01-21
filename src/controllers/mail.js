@@ -21,10 +21,14 @@ module.exports = {
 
                 // Başarılı yanıt gönder
                 res.status(200).send({
-                    error: false,
-                    message: "Email successfully sent."
+                    data: {
+                        error: false,
+                        status: 200,
+                        message: "Email successfully sent."
+                    }
                 });
-            } catch (error) {
+            }
+            catch (error) {
                 // Hata durumunda hata yanıtı gönder
                 res.status(500).send({
                     error: true,
@@ -34,7 +38,7 @@ module.exports = {
 
         }
         else {
-            res.status(401).send({
+            res.status(400).send({
                 error: true,
                 message: 'To and data required !'
             })
