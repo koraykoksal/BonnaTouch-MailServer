@@ -15,11 +15,12 @@ require('express-async-errors')
 app.use(express.json())
 
 
-//! backend deploy edildiğinde deploy edilen adrese istek atıldığı zaman CORS hatası alınabilir.
-//! bunun önüne geçmek için original adresi belirtiyoruz
-// app.use(cors({
-//     origin: 'http://127.0.0.1:8000'
-// }));
+app.use(cors()); // Tüm kökenlere izin verir.
+
+// veya belirli bir kökene izin vermek için
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
 
 
 //! Route
