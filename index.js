@@ -14,8 +14,11 @@ require('express-async-errors')
 // Accept Json
 app.use(express.json())
 
+
+//! backend deploy edildiğinde deploy edilen adrese istek atıldığı zaman CORS hatası alınabilir.
+//! bunun önüne geçmek için original adresi belirtiyoruz
 app.use(cors({
-    origin: 'http://localhost:8000'
+    origin: 'http://127.0.0.1:8000'
 }));
 
 
@@ -38,7 +41,7 @@ app.use(require('./src/middlewares/errorHandler'))
 
 
 const PORT = process.env.PORT || 8000
-app.listen(PORT, () => console.log('server running'))
+app.listen(PORT, () => console.log('server running via port',PORT))
 
 
 
