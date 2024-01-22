@@ -4,14 +4,24 @@ const mail = require('../helper/sendMail')
 
 module.exports = {
     sendMail: async (req, res) => {
-        
-        const result = req.body;
 
-        if (result.to && result.data && result.subject) {
+        const {to,data,subject} = req.body;
+
+        if (to && subject && data) {
+
+            // Veriyi düzgün bir formata dönüştürmek
+            const tableData = data.map(({ url, text, id }) => ({
+                URL: url,
+                CuisineType: text.cuisineType,
+                ColorType: text.colorType.join(', '),
+                StyleType: text.styleType,
+                ID: id
+            }));
 
             try {
+
                 // E-posta gönderme işlemini bekleyin
-                await mail(result);
+                await mail(to,subject,tableData);
 
                 // Başarılı yanıt gönder
                 res.status(200).send({

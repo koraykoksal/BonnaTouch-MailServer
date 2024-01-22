@@ -3,7 +3,18 @@
 const { json } = require('express');
 const nodemailer = require('nodemailer')
 
-async function sendMail(data) {
+async function sendMail(to, subject, tableData) {
+
+    let text = "";
+
+    tableData.forEach(element => {
+        const colorTypes = element.ColorType
+        text += `CuisineType: ${element.CuisineType}\n`;
+        text += `StyleType: ${element.StyleType}\n`;
+        text += `ColorType: ${colorTypes}\n`;
+        text += `Url: ${element.URL}\n\n`;
+        
+    });
 
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -13,39 +24,17 @@ async function sendMail(data) {
         }
     });
 
-    // Veriyi düzgün bir formata dönüştürmek
-    const tableData = JSON.parse(data.data).map(({ url, text, id }) => ({
-        URL: url,
-        CuisineType: text.cuisineType,
-        ColorType: text.colorType.join(', '),
-        StyleType: text.styleType,
-        ID: id
-    }));
-
-    let html = `<table border="1"><tr><th>URL</th><th>Cuisine Type</th><th>Color Type</th><th>Style Type</th><th>ID</th></tr>`;
-
-    tableData.forEach(item => {
-        html += `<tr>
-                   <td>${item.url}</td>
-                   <td>${item.text.cuisineType}</td>
-                   <td>${item.text.colorType.join(', ')}</td>
-                   <td>${item.text.styleType}</td>
-                   <td>${item.id}</td>
-                 </tr>`;
-    });
-
-    html += `</table>`;
 
     const mailOptions = {
         from: {
             name: "Bonna Touch",
             address: process.env.MAIL_FROM,
         },
-        to: data.to,
-        subject: data.subject,
-        text: `${html}`
+        to: to,
+        subject: subject,
+        text: text
 
-};
+    };
 
     try {
         let info = await transporter.sendMail(mailOptions);
