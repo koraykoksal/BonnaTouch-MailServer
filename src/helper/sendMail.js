@@ -1,8 +1,10 @@
 "use strict"
 
+const { json } = require('express');
 const nodemailer = require('nodemailer')
 
 async function sendMail(data) {
+
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         auth: {
@@ -11,18 +13,39 @@ async function sendMail(data) {
         }
     });
 
+    // Veriyi düzgün bir formata dönüştürmek
+    const tableData = JSON.parse(data.data).map(({ url, text, id }) => ({
+        URL: url,
+        CuisineType: text.cuisineType,
+        ColorType: text.colorType.join(', '),
+        StyleType: text.styleType,
+        ID: id
+    }));
+
+    let html = `<table border="1"><tr><th>URL</th><th>Cuisine Type</th><th>Color Type</th><th>Style Type</th><th>ID</th></tr>`;
+
+    tableData.forEach(item => {
+        html += `<tr>
+                   <td>${item.url}</td>
+                   <td>${item.text.cuisineType}</td>
+                   <td>${item.text.colorType.join(', ')}</td>
+                   <td>${item.text.styleType}</td>
+                   <td>${item.id}</td>
+                 </tr>`;
+    });
+
+    html += `</table>`;
+
     const mailOptions = {
         from: {
             name: "Bonna Touch",
             address: process.env.MAIL_FROM,
         },
         to: data.to,
-        subject: 'Bonna Touch Design AI Support Information',
-        text: `
-            ${data.data}
-        `
+        subject: data.subject,
+        text: `${html}`
 
-    };
+};
 
     try {
         let info = await transporter.sendMail(mailOptions);

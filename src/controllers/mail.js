@@ -4,16 +4,10 @@ const mail = require('../helper/sendMail')
 
 module.exports = {
     sendMail: async (req, res) => {
+        
         const result = req.body;
 
-        // if (!result.to && !result.data) {
-        //     return res.status(401).send({
-        //         error: true,
-        //         message: 'To and data required !'
-        //     });
-        // }
-
-        if (result.to && result.data) {
+        if (result.to && result.data && result.subject) {
 
             try {
                 // E-posta gönderme işlemini bekleyin
