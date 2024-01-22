@@ -5,9 +5,19 @@ const mail = require('../helper/sendMail')
 module.exports = {
     sendMail: async (req, res) => {
 
-        const {to,data,subject} = req.body;
+        const { to, note ,data, subject } = req.body;
 
         if (to && subject && data) {
+
+            const userInfo = data.map((item)=>({
+                name:item.user.name,
+                surname:item.user.surname,
+                job:item.user.job,
+                company:item.user.company,
+                country:item.user.country,
+                email:item.user.email,
+                companyType:item.user.companyType
+            }))
 
             // Veriyi düzgün bir formata dönüştürmek
             const tableData = data.map(({ url, text, id }) => ({
@@ -18,10 +28,12 @@ module.exports = {
                 ID: id
             }));
 
+
             try {
 
                 // E-posta gönderme işlemini bekleyin
-                await mail(to,subject,tableData);
+                // data parametresi userInfo bilgisini içeriyor
+                await mail(to, subject, tableData, userInfo, note);
 
                 // Başarılı yanıt gönder
                 res.status(200).send({

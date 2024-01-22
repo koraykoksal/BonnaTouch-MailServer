@@ -3,7 +3,8 @@
 const { json } = require('express');
 const nodemailer = require('nodemailer')
 
-async function sendMail(to, subject, tableData) {
+async function sendMail(to, subject, tableData, userInfo, note) {
+
 
     let text = "";
 
@@ -13,7 +14,7 @@ async function sendMail(to, subject, tableData) {
         text += `StyleType: ${element.StyleType}\n`;
         text += `ColorType: ${colorTypes}\n`;
         text += `Url: ${element.URL}\n\n`;
-        
+
     });
 
     let transporter = nodemailer.createTransport({
@@ -32,7 +33,17 @@ async function sendMail(to, subject, tableData) {
         },
         to: to,
         subject: subject,
-        text: `Müşteri bilgileri\n\n\n${text}`
+        text: `Customer Information\n
+            About: Liked Data\n
+            Name : ${userInfo[0]?.name || ""}\n
+            Surname : ${userInfo[0]?.surname || ""}\n
+            Job : ${userInfo[0]?.job || ""}\n
+            Email : ${userInfo[0]?.email || ""}\n
+            Country : ${userInfo[0]?.country || ""}\n
+            Company : ${userInfo[0]?.company || ""}\n
+            Company Type: ${userInfo[0]?.companyType || ""}\n\n
+            
+            Note: ${note}\n\n\n${text}`
 
     };
 
