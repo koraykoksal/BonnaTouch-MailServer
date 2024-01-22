@@ -32,7 +32,7 @@ async function sendMail(to, subject, tableData) {
         },
         to: to,
         subject: subject,
-        text: text
+        text: `Müşteri bilgileri\n\n\n${text}`
 
     };
 
