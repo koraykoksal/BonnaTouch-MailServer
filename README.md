@@ -8,6 +8,18 @@
 ##### SMTP configuration was made via Gmail.
 
 
+## Installation
+
+Install BonnaTouch-MailServer
+
+```bash
+  npm install BonnaTouch-MailServer
+  cd BonnaTouch-MailServer/current_version folder
+  npm install node_modules
+  npm start or yarn start or pnpm dev&start
+```
+
+
 
 ## Environment Variables
 
